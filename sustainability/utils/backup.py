@@ -9,6 +9,12 @@ async def backup_database(bot: commands.Bot, db_instance) -> None:
     :param bot: The running bot instance.
     :param db_instance: Your LocalDatabase instance.
     """
+    """
+    
+    DISABLING FOR TESTING
+    
+    """
+    return
     # Get the database file (this will commit & close the connection)
     db_file = db_instance.shutdown()
     

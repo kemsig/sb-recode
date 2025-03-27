@@ -16,6 +16,9 @@ class SustainBot(commands.Bot):
     async def setup_hook(self):
         # Load our cog extensions
         await self.load_extension("cogs.default")
+        await self.load_extension("cogs.admin")
+        await self.load_extension("cogs.events")
+        # await self.load_extension("cogs.leaderboard")
     
     async def on_ready(self):
         print(f'Bot: "{self.user}" successfully logged in.')

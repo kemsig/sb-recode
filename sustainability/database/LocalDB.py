@@ -75,6 +75,29 @@ class LocalDatabase(Database):
             print(f"LocalDatabase.get_user_info error: {e}")
             return None
 
+    def get_leaderboard(self, limit: int = 10, offset: int = 0) -> list:
+        """
+        Returns a list of users ordered by total points in descending order.
+        Each user is represented as a dictionary.
+        """
+        try:
+            cur = self.conn.cursor()
+            cur.execute(
+                "SELECT * FROM users ORDER BY points_total DESC LIMIT ? OFFSET ?",
+                (limit, offset)
+            )
+            rows = cur.fetchall()
+            leaderboard = []
+            for row in rows:
+                leaderboard.append({
+                    "user_id": row["user_id"],
+                    "points_cur": row["points_cur"],
+                    "points_total": row["points_total"]
+                })
+            return leaderboard
+        except Exception as e:
+            print(f"LocalDatabase.get_leaderboard error: {e}")
+            return []
 
     def shutdown(self):
         """
@@ -85,7 +108,6 @@ class LocalDatabase(Database):
         self.conn.commit()
         self.conn.close()
         return self.db_file
-    
 
     def check_db_size(self) -> bool:
         """
