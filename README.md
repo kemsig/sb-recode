@@ -142,14 +142,14 @@ You can run the bot in one of the following ways:
 
 ### 🐳 Option 1: Pull and Run from Docker Hub
 ```bash
-docker pull yourusername/discord-bot
-docker run --env-file .env yourusername/discord-bot
+docker pull kemsig/sasebot
+docker run --env-file .env kemsig/sasebot
 ```
 
 ### 🛠 Option 2: Build and Run Locally
 ```bash
-docker build -t discord-bot .
-docker run --env-file .env discord-bot
+docker build -t sasebot .
+docker run --env-file .env sasebot
 ```
 
 ### 🐍 Option 3: Manual Local Setup with pip
@@ -169,7 +169,7 @@ python bot.py
 ### 📄 Example `.env`
 ```env
 # client secrets
-DISCORD_BOT_SECRET=MTE4OTA5MzAxMzc2NzYwMjIwNg.GhoXCA.wLUVlsIdeSpDjRDLu-uE3rNS-oAV_-fcKbeMUo
+DISCORD_BOT_SECRET=<your_secret>
 NO_MONGO=true
 LOCAL_DB_NAME=data/local.db
 
