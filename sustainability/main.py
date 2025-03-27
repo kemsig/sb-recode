@@ -6,8 +6,11 @@ from database.LocalDB import LocalDatabase
 from utils.backup import backup_database
 
 # create local db
-local_db = LocalDatabase("local.db")
-
+if config.NO_MONGO:
+    local_db = LocalDatabase(config.LOCAL_DB_NAME)
+else:
+    # mongo implementation
+    print('sike there is no mongo implementation (cause i dont really need it right now)')
 
 class SustainBot(commands.Bot):
     def __init__(self):
@@ -18,7 +21,8 @@ class SustainBot(commands.Bot):
         await self.load_extension("cogs.default")
         await self.load_extension("cogs.admin")
         await self.load_extension("cogs.events")
-        # await self.load_extension("cogs.leaderboard")
+        await self.load_extension("cogs.manual")
+        await self.load_extension("cogs.leaderboard")
     
     async def on_ready(self):
         print(f'Bot: "{self.user}" successfully logged in.')

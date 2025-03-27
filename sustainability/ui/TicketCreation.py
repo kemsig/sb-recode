@@ -2,13 +2,14 @@ import discord
 from datetime import datetime as dt
 from discord import ui
 from ui.TicketSubmission import TicketSubmitButtons
+import config
 
 class TicketCreateButton(ui.View):
         def __init__(self):
             super().__init__(timeout=None)
             self.value = None
 
-        @discord.ui.button(label='Claim your points!', style=discord.ButtonStyle.blurple, disabled= False, custom_id="create_ticket")
+        @discord.ui.button(label='Claim your points!', style=discord.ButtonStyle.green, disabled= False, custom_id="create_ticket")
         async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
             # get the user's mention and id
             user_mention = interaction.user.mention
@@ -23,4 +24,4 @@ class TicketCreateButton(ui.View):
             # create ticket submission button
             sub_button = TicketSubmitButtons()
             # mention the user so that they can join and send the info
-            await thread.send(f'Hello! {user_mention}', view=sub_button)
+            await thread.send(f'Hello! {user_mention}\n\n{config.CLAIM_POINTS_MESSAGE}', view=sub_button)

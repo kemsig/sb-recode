@@ -25,3 +25,11 @@ class Database(ABC):
         For MongoDB, it might simply close the connection.
         """
         pass
+
+    @abstractmethod
+    def get_leaderboard(self):
+        pass
+
+    @abstractmethod
+    def remove_user(self, user_id: int):
+        pass

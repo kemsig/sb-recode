@@ -121,3 +121,18 @@ class LocalDatabase(Database):
         except Exception as e:
             print(f"Error checking database size: {e}")
             return False
+
+
+    def remove_user(self, user_id: int) -> bool:
+        """
+        Removes the user record from the database.
+        Returns False on success, True if an error occurred.
+        """
+        try:
+            cur = self.conn.cursor()
+            cur.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
+            self.conn.commit()
+            return False
+        except Exception as e:
+            print(f"LocalDatabase.remove_user error: {e}")
+            return True

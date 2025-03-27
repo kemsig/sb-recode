@@ -30,7 +30,7 @@ class AdminCommands(commands.Cog):
         print("Setup in progress..")
         # Create the persistent ticket button.
         view = TicketCreateButton()
-        await interaction.channel.send("hello", view=view)
+        await interaction.channel.send(config.SETUP_MESSAGE, view=view)
         await view.wait()   
 
     @app_commands.command(name='confirm')

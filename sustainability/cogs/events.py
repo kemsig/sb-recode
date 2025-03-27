@@ -12,7 +12,7 @@ class Events(commands.Cog):
         # Create admin role if it doesn't exist
         role = discord.utils.get(guild.roles, name=config.ROLE_NAME)
         if not role:
-            role = await guild.create_role(name=config.ROLE_NAME)
+            role = await guild.create_role(name=config.ROLE_NAME, color=discord.Colour.from_rgb(144, 238, 144))
             print(f"Created role '{config.ROLE_NAME}' in guild: {guild.name}")
         else:
             print(f"Role '{config.ROLE_NAME}' already exists in guild: {guild.name}")
