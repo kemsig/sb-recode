@@ -41,46 +41,6 @@ class ManualAdminCommands(commands.Cog):
 
 
 
-    @app_commands.command(name="delpoints", description="Subtract points from a user. (Format: user_id:points)")
-    @is_mod()
-    async def delpoints(self, interaction: discord.Interaction, key: str):
-        """
-        Manually subtract points from a user's current points.
-        """
-        logs_channel = discord.utils.get(interaction.guild.channels, name=config.LOG_CHANNEL_NAME)
-        try:
-            parts = key.split(":")
-            if len(parts) < 2:
-                await interaction.response.send_message("Invalid format. Use user_id:points", ephemeral=True)
-                return
-            user_id = int(parts[0])
-            points_to_subtract = int(parts[1])
-        except Exception as e:
-            await interaction.response.send_message("Error parsing input. Format should be user_id:points", ephemeral=True)
-            return
-
-        # Subtract points by adding a negative value.
-        result = self.db.add_points(user_id, -abs(points_to_subtract))
-        if result:
-            error_embed = Logger.database_failure(
-                interaction.user.mention,
-                f"Failed to subtract {points_to_subtract} points from user {user_id}."
-            )
-            if logs_channel:
-                await logs_channel.send(embed=error_embed)
-            await interaction.response.send_message("Database error while subtracting points.", ephemeral=True)
-            return
-
-        success_embed = Logger.command_success(
-            interaction.user.mention,
-            f"Successfully subtracted {points_to_subtract} points from user {user_id}."
-        )
-        if logs_channel:
-            await logs_channel.send(embed=success_embed)
-        await interaction.response.send_message(
-            f"Successfully subtracted {points_to_subtract} points from user {user_id}.", ephemeral=True
-        )
-
     @app_commands.command(name="addpoints", description="Add points to a user (current and total). (Format: user_id:points)")
     @is_mod()
     async def addpoints(self, interaction: discord.Interaction, key: str):

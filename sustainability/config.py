@@ -12,7 +12,6 @@ LOCAL_DB_NAME = os.getenv("LOCAL_DB_NAME", 'local.db')
 
 # Bot settings
 GACHA_MIN_BALANCE = int(os.getenv("GACHA_MIN_BALANCE", "14"))
-ADMIN_CHANNEL_NAME = os.getenv("ADMIN_CHANNEL_NAME", "sustain-admin")
 LOG_CHANNEL_NAME = os.getenv("LOG_CHANNEL_NAME", "logs-sustainability")
 ROLE_NAME = os.getenv("ROLE_NAME", "Sustain Mod")
 
