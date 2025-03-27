@@ -112,5 +112,59 @@ Commands for manually modifying the user database.
 
 ---
 
+## 🚀 Deployment Instructions
+
+You can run the bot in one of the following ways:
+
+### 🐳 Option 1: Pull and Run from Docker Hub
+```bash
+docker pull kemsig/sasebot
+docker run --env-file .env kemsig/sasebot
+```
+
+### 🛠 Option 2: Build and Run Locally
+```bash
+docker build -t sase-bot .
+docker run --env-file .env sase-bot
+```
+
+### 🐍 Option 3: Manual Local Setup with pip
+```bash
+# (Optional) Create virtual environment
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set environment variables (or use .env)
+export DISCORD_BOT_SECRET=your_token
+python bot.py
+```
+
+### 📄 Example `.env`
+
+Note there is no mongo support ahahahahahah.
+
+```env
+# client secrets
+DISCORD_BOT_SECRET=<your discord secret>
+NO_MONGO=true
+LOCAL_DB_NAME=data/local.db
+
+# Bot settings
+GACHA_MIN_BALANCE=14
+ADMIN_CHANNEL_NAME=sustain-admin
+LOG_CHANNEL_NAME=logs-sustainability
+ROLE_NAME=Sustain Mod
+
+# other settings
+# MAX_DB_SIZE=
+# SETUP_MESSAGE=
+# CLAIM_POINTS_MESSAGE=
+```
+
+---
+
 For any additional features, bug fixes, or to onboard new moderators, consider expanding these docs further or integrating command descriptions directly in Discord via `@app_commands.describe`.
 
