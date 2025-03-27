@@ -6,6 +6,7 @@ from database.LocalDB import LocalDatabase
 from utils.backup import backup_database
 
 # create local db
+print(config.LOCAL_DB_NAME)
 if config.NO_MONGO:
     local_db = LocalDatabase(config.LOCAL_DB_NAME)
 else:

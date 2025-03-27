@@ -12,7 +12,7 @@ class LocalDatabase(Database):
         points_cur INTEGER NOT NULL,
         points_total INTEGER NOT NULL
     """
-    def __init__(self, db_file: str = "local.db"):
+    def __init__(self, db_file: str = "data/local.db"):
         self.db_file = db_file
         self.conn = sqlite3.connect(self.db_file)
         self.conn.row_factory = sqlite3.Row
