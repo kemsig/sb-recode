@@ -4,6 +4,30 @@ This document describes the usage and behavior of each slash command available i
 
 ---
 
+## 📚 Table of Contents
+- [🛠 Admin Commands](#-admin-commands)
+  - [/setup](#setup)
+  - [/confirm](#confirm-numpoints)
+  - [/deny](#deny-reason)
+- [👤 Default (User) Commands](#-default-user-commands)
+  - [/points](#points)
+  - [/gacha](#gacha)
+- [🔧 Manual Admin Commands](#-manual-admin-commands)
+  - [/remuser](#remuser-user_id)
+  - [/addpoints](#addpoints-user_idpoints)
+  - [/addtotalpoints](#addtotalpoints-user_idpoints)
+- [🔐 Permissions & Notes](#-permissions--notes)
+- [🚀 Deployment Instructions](#-deployment-instructions)
+- [🧭 Moderator Onboarding Guide](#-moderator-onboarding-guide)
+  - [Permissions Required](#-permissions-required)
+  - [Setting Up the Ticket System](#-setting-up-the-ticket-system)
+  - [Approving a Request](#-approving-a-request)
+  - [Denying a Request](#-denying-a-request)
+  - [Manual Adjustments](#-manual-adjustments)
+  - [Logging Guide](#-logging-guide)
+
+---
+
 ## 🛠 Admin Commands
 
 These commands are only accessible to moderators (checked via `@is_mod()` decorator).
@@ -118,14 +142,14 @@ You can run the bot in one of the following ways:
 
 ### 🐳 Option 1: Pull and Run from Docker Hub
 ```bash
-docker pull kemsig/sasebot
-docker run --env-file .env kemsig/sasebot
+docker pull yourusername/discord-bot
+docker run --env-file .env yourusername/discord-bot
 ```
 
 ### 🛠 Option 2: Build and Run Locally
 ```bash
-docker build -t sase-bot .
-docker run --env-file .env sase-bot
+docker build -t discord-bot .
+docker run --env-file .env discord-bot
 ```
 
 ### 🐍 Option 3: Manual Local Setup with pip
@@ -143,12 +167,9 @@ python bot.py
 ```
 
 ### 📄 Example `.env`
-
-Note there is no mongo support ahahahahahah.
-
 ```env
 # client secrets
-DISCORD_BOT_SECRET=<your discord secret>
+DISCORD_BOT_SECRET=MTE4OTA5MzAxMzc2NzYwMjIwNg.GhoXCA.wLUVlsIdeSpDjRDLu-uE3rNS-oAV_-fcKbeMUo
 NO_MONGO=true
 LOCAL_DB_NAME=data/local.db
 
@@ -163,6 +184,51 @@ ROLE_NAME=Sustain Mod
 # SETUP_MESSAGE=
 # CLAIM_POINTS_MESSAGE=
 ```
+
+---
+
+## 🧭 Moderator Onboarding Guide
+
+Welcome to the moderation team! Here’s everything you need to know to get started using the bot effectively:
+
+### ✅ Permissions Required
+Ensure you have the role specified in `.env` under `ROLE_NAME` (e.g., `Sustain Mod`). This gives you access to all mod commands.
+
+### 🧷 Setting Up the Ticket System
+Use `/setup` in the appropriate channel to deploy the ticket button. This is the entry point for user point requests.
+
+### ✅ Approving a Request
+1. Navigate to the thread created by a user (format: `request_<user_id>`).
+2. Run `/confirm <points>` with the appropriate point amount.
+3. The user is notified via DM and the thread is auto-deleted.
+
+### ❌ Denying a Request
+1. Navigate to the thread created by a user.
+2. Run `/deny <reason>` with a short explanation.
+3. The user is DM'd and the thread is removed.
+
+### 🛠 Manual Adjustments
+- Use `/addpoints user_id:amount` to add points to both current and total.
+- Use `/addtotalpoints user_id:amount` to add points only to lifetime total.
+- Use `/remuser user_id` to completely remove a user from the database.
+
+### 📢 Logging Guide
+The bot uses a centralized logging system to report actions and errors. Logs are sent to the channel specified by `LOG_CHANNEL_NAME`.
+
+#### 🧾 Types of Logs to Look Out For:
+- **✅ Command Success**: Logged when a command completes as expected.
+- **⚠️ Warning**: Logged for non-critical issues (e.g., user doesn't meet gacha requirements).
+- **❌ Database Failure**: Critical — review immediately. May indicate issues with data integrity.
+- **🎉 Gacha Roll Success**: Indicates a user has won a prize. Mods should follow up to deliver it.
+
+#### 📘 Example:
+```python
+from utils.logger import Logger
+log_embed = Logger.command_success("@mod", "Successfully added 10 points to user 123456")
+await logs_channel.send(embed=log_embed)
+```
+
+If you have any issues, contact the bot maintainer or check the logs for error messages.
 
 ---
 
